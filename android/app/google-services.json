@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "282710044274",
+    "project_id": "digit-recognizer-b9692",
+    "storage_bucket": "digit-recognizer-b9692.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282710044274:android:c66bd098a56ead031cdceb",
+        "android_client_info": {
+          "package_name": "com.example.digit_recognizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282710044274-a0sjfkdv3qo5frbhume9e6binha1s9ea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.digit_recognizer",
+            "certificate_hash": "6d1665f1464cf1b1a71f3f5491ee1ec0f7b924ce"
+          }
+        },
+        {
+          "client_id": "282710044274-e2qo22lbo6k1i92497v3unt2dnem2s3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAno-1L_lD9Rw0_W2FcjUvSbSSrPCtJY4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282710044274-e2qo22lbo6k1i92497v3unt2dnem2s3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
