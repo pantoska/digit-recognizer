@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import './screens/draw_screen.dart';
-import 'method_channel/test.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,13 +13,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: AppBarTheme(
-            color: Colors.black,
+            color: Colors.blueGrey,
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Colors.black,
           ),
         ),
         home: DrawScreen());
-    // home: Test());
   }
 }

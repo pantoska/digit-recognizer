@@ -16,7 +16,7 @@ class PredictionWidget extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: prediction == null
                 ? Colors.black
-                : Colors.red.withOpacity(
+                : Colors.blueGrey.withOpacity(
                     (prediction.confidence * 2).clamp(0, 1).toDouble(),
                   ),
           ),
@@ -45,7 +45,7 @@ class PredictionWidget extends StatelessWidget {
       null
     ];
     predictions?.forEach((prediction) {
-      data[prediction.index] = prediction;
+      data[prediction.label] = prediction;
     });
 
     return data;

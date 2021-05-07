@@ -19,12 +19,11 @@ final _whitePaint = Paint()
 final _bgPaint = Paint()..color = Colors.black;
 
 class Recognizer {
-  static final platform = const MethodChannel('samples.flutter.dev/battery');
+  static final platform = const MethodChannel('digit_recognizer/image');
 
   loadModelFromFirebase() async {
     try {
-      final result = await platform.invokeMethod('getBatteryLevel');
-      return result;
+      await platform.invokeMethod('loadModelFromFirebase');
     } catch (exception) {
       print('Failed on loading your model from Firebase: $exception');
       print('The program will not be resumed');
@@ -32,25 +31,9 @@ class Recognizer {
     }
   }
 
-  Future<String> loadModel() async {
+  Future<void> loadModel() async {
     Tflite.close();
     await loadModelFromFirebase();
-
-    // print("!!!!!!!!!!!!!!result MOdel" + modelFile.toString());
-
-    try {
-      var model;
-      model = await Tflite.loadModel(
-        model: "assets/mnist-new.tflite",
-        labels: "assets/mnist.txt",
-      );
-      return model;
-    } catch (exception) {
-      print(
-          'Failed on loading your model to the TFLite interpreter: $exception');
-      print('The program will not be resumed');
-      rethrow;
-    }
   }
 
   dispose() {
@@ -69,18 +52,9 @@ class Recognizer {
 
   Future recognize(List<Offset> points) async {
     final picture = _pointsToPicture(points);
+    var accuracy = await _predict(picture, Constants.mnistImageSize);
 
-    Uint8List bytes = await _predict(picture, Constants.mnistImageSize);
-
-    var prediction = await _predictTflite(bytes);
-
-    print("!!!!!!!!!!!" + prediction.toString());
-
-    return prediction;
-  }
-
-  Future _predictTflite(Uint8List bytes) {
-    return Tflite.runModelOnBinary(binary: bytes);
+    return accuracy;
   }
 
   _predict(Picture pic, int size) async {
@@ -98,28 +72,19 @@ class Recognizer {
       buffer[index++] = (r + g + b) / 3.0 / 255.0;
     }
 
-    print(resultBytes.buffer.asUint8List());
-
-    final List<double> result = await platform
-        .invokeMethod('dupa', {'picture': resultBytes.buffer.asUint8List()});
+    final List<double> result = await platform.invokeMethod(
+        'classifyImage', {'image': resultBytes.buffer.asUint8List()});
 
     var newList = [];
 
     for (int i = 0; i < result.length; i++) {
       if (result[i] > 0.1) {
-        var object = {
-          'confidence': result[i].toDouble(),
-          'index': i.toInt(),
-          'label': i.toString()
-        };
+        var object = {'confidence': result[i].toDouble(), 'label': i.toInt()};
         newList.add(object);
       }
     }
 
-    print("!!!!!!!!!patkio" + newList.toString());
-
-    return resultBytes.buffer.asUint8List();
-    // return object;
+    return newList;
   }
 
   Picture _pointsToPicture(List<Offset> points) {

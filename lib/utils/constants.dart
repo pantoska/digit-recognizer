@@ -1,9 +1,7 @@
 class Constants {
-  static double canvasSize = 300;
-  static double borderSize = 2;
-
-  static double imageSize = 300;
-  static int mnistImageSize = 28;
-
-  static double strokeWidth = 8;
+  static final double canvasSize = 300;
+  static final double borderSize = 2;
+  static final double imageSize = 300;
+  static final int mnistImageSize = 28;
+  static final double strokeWidth = 8;
 }

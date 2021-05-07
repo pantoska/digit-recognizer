@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import '../models/prediction.dart';
 import '../screens/drawing_painter.dart';
@@ -13,7 +11,7 @@ class DrawScreen extends StatefulWidget {
 }
 
 class _DrawScreenState extends State<DrawScreen> {
-  final _points = List<Offset>();
+  final _points = <Offset>[];
   final _recognizer = Recognizer();
   List<Prediction> _prediction;
   bool initialize = false;
@@ -24,6 +22,10 @@ class _DrawScreenState extends State<DrawScreen> {
     _initModel();
   }
 
+  void _initModel() async {
+    await _recognizer.loadModel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,35 +34,12 @@ class _DrawScreenState extends State<DrawScreen> {
       ),
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'MNIST database of handwritten digits',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'The digits have been size-normalized and centered in a fixed-size images (28 x 28)',
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              _mnistPreviewImage(),
-            ],
-          ),
           SizedBox(
             height: 10,
           ),
           _drawCanvasWidget(),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           PredictionWidget(
             predictions: _prediction,
@@ -110,37 +89,6 @@ class _DrawScreenState extends State<DrawScreen> {
         ),
       ),
     );
-  }
-
-  Widget _mnistPreviewImage() {
-    return Container(
-      width: 100,
-      height: 100,
-      color: Colors.black,
-      child: FutureBuilder(
-        future: _previewImage(),
-        builder: (BuildContext _, snapshot) {
-          if (snapshot.hasData) {
-            return Image.memory(
-              snapshot.data,
-              fit: BoxFit.fill,
-            );
-          } else {
-            return Center(
-              child: Text('Error'),
-            );
-          }
-        },
-      ),
-    );
-  }
-
-  void _initModel() async {
-    var res = await _recognizer.loadModel();
-  }
-
-  Future<Uint8List> _previewImage() async {
-    return await _recognizer.previewImage(_points);
   }
 
   void _recognize() async {
