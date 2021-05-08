@@ -1,6 +1,6 @@
 # Digit recognizer
 
-An application created to compare machine learning tools for mobile applications realized in the Flutter
+An application created to compare machine learning tools for mobile applications realized in Flutter
 
 ## Technology
 
