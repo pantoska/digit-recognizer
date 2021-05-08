@@ -1,16 +1,24 @@
-# digit_recognizer
+# Digit recognizer
 
-A new Flutter project.
+An application created to compare machine learning tools for mobile applications realized in the Flutter
 
-## Getting Started
+## Technology
 
-This project is a starting point for a Flutter application.
+- Flutter 2.0.6
+- Dart 2.12.3
+- tflite 1.1.2
+- Firebase ML Kit
 
-A few resources to get you started if this is your first Flutter project:
+## Run
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+To launch application with Firebase ML Kit
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+$ flutter run --dart-define=TOOL="firebase"
+```
+
+To launch application with tflite
+
+```bash
+$ flutter run --dart-define=TOOL="tflite"
+```

@@ -28,12 +28,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
-  tflite: ^1.0.6
+  tflite: ^1.1.2
 
-  firebase_ml_custom: 0.1.0
-  image_picker: 0.6.7+22
-  path_provider: 1.6.28
-  firebase_core: 0.7.0
+  image_picker: ^0.7.4
+  path_provider: ^2.0.1
+  firebase_core: ^1.1.0
 
 dev_dependencies:
   flutter_test:
