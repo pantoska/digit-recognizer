@@ -40,8 +40,8 @@ class MainActivity: FlutterActivity() {
         val startTime = System.nanoTime()
         val result = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
         interpreter?.run(bitmap, result)
-        val elapsedTime = (System.nanoTime() - startTime) / 1000000
-        Log.d("info", "Inference time = " + elapsedTime + "ms")
+        val elapsedTime = (System.nanoTime() - startTime) / 1000
+        Log.d("info", "Inference time = " + elapsedTime + " microseconds")
 
         return result[0].map { i -> i.toDouble() }.toDoubleArray()
     }
@@ -53,12 +53,15 @@ class MainActivity: FlutterActivity() {
       if (call.method == "loadModelFromFirebase") {
           val remoteModel = FirebaseCustomRemoteModel.Builder("mnist").build()
 
+          val startTime = System.nanoTime()
           val conditions = FirebaseModelDownloadConditions.Builder()
                   .requireWifi()
                   .build()
           FirebaseModelManager.getInstance().download(remoteModel, conditions)
                   .addOnCompleteListener { task ->
                       if (task.isSuccessful) {
+                          val elapsedTime = (System.nanoTime() - startTime) / 1000
+                          Log.d("info", "Download time = " + elapsedTime + " microseconds")
                           FirebaseModelManager.getInstance().getLatestModelFile(remoteModel)
                                   .addOnCompleteListener {
                                       if (it.isSuccessful && it.result != null) {
@@ -79,7 +82,7 @@ class MainActivity: FlutterActivity() {
                       }
                   }
             }
-      else if (call.method == "classifyImage") {
+        else if (call.method == "classifyImage") {
           val picture = call.argument<ByteArray>("image")
           val buffer = ByteBuffer.wrap(picture!!)
           val accuracy = classify(buffer)

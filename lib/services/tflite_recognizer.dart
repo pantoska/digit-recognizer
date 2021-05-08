@@ -16,11 +16,15 @@ class TfliteRecognizer extends Recognizer {
     print('Process image with Tflite');
 
     Tflite.close();
+    Stopwatch stopwatch = new Stopwatch()..start();
 
-    return Tflite.loadModel(
+    var loadedModel = Tflite.loadModel(
       model: "assets/mnist-new.tflite",
       labels: "assets/mnist.txt",
     );
+    print('Download time = ${stopwatch.elapsed.inMicroseconds} microseconds');
+
+    return loadedModel;
   }
 
   @override
@@ -28,7 +32,10 @@ class TfliteRecognizer extends Recognizer {
     final picture = imageProcessing.pointsToPicture(points);
     Uint8List bytes = await imageProcessing.imageToByteListUint8(
         picture, Constants.mnistImageSize);
-    return Tflite.runModelOnBinary(binary: bytes);
+    Stopwatch stopwatch = new Stopwatch()..start();
+    var result = Tflite.runModelOnBinary(binary: bytes);
+    print('Inference time = ${stopwatch.elapsed.inMicroseconds} microseconds');
+    return result;
   }
 
   dispose() {
