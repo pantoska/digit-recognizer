@@ -13,6 +13,7 @@ class FirebaseRecognizer extends Recognizer {
 
   @override
   Future<void> loadModel() async {
+    print('Process image with Firebase');
     try {
       await platform.invokeMethod('loadModelFromFirebase');
     } catch (exception) {

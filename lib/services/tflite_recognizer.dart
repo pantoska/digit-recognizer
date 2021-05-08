@@ -13,6 +13,8 @@ class TfliteRecognizer extends Recognizer {
 
   @override
   Future<void> loadModel() {
+    print('Process image with Tflite');
+
     Tflite.close();
 
     return Tflite.loadModel(

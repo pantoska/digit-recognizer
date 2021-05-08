@@ -1,3 +1,4 @@
+import 'package:digit_recognizer/services/firebase_recognizer.dart';
 import 'package:digit_recognizer/services/image_processing.dart';
 import 'package:digit_recognizer/services/tflite_recognizer.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,18 @@ class DrawScreen extends StatefulWidget {
 
 class _DrawScreenState extends State<DrawScreen> {
   final _points = <Offset>[];
-  final _recognizer = TfliteRecognizer(ImageProcessing());
+  final toolChoice = const String.fromEnvironment("TOOL");
+  ImageProcessing imageProcessing = ImageProcessing();
   List<Prediction> _prediction;
   bool initialize = false;
+  var _recognizer;
 
   @override
   void initState() {
     super.initState();
+    _recognizer = toolChoice == "firebase"
+        ? FirebaseRecognizer(imageProcessing)
+        : TfliteRecognizer(imageProcessing);
     _initModel();
   }
 
