@@ -1,13 +1,13 @@
 class Prediction {
   final double confidence;
-  final int label;
+  final int index;
 
-  Prediction({this.confidence, this.label});
+  Prediction({this.confidence, this.index});
 
   factory Prediction.fromJson(Map<dynamic, dynamic> json) {
     return Prediction(
       confidence: json['confidence'],
-      label: json['label'],
+      index: json['index'],
     );
   }
 }

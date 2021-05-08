@@ -45,7 +45,7 @@ class PredictionWidget extends StatelessWidget {
       null
     ];
     predictions?.forEach((prediction) {
-      data[prediction.label] = prediction;
+      data[prediction.index] = prediction;
     });
 
     return data;

@@ -1,8 +1,9 @@
+import 'package:digit_recognizer/services/image_processing.dart';
+import 'package:digit_recognizer/services/tflite_recognizer.dart';
 import 'package:flutter/material.dart';
 import '../models/prediction.dart';
 import '../screens/drawing_painter.dart';
 import '../screens/prediction_widget.dart';
-import '../services/recognizer.dart';
 import '../utils/constants.dart';
 
 class DrawScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class DrawScreen extends StatefulWidget {
 
 class _DrawScreenState extends State<DrawScreen> {
   final _points = <Offset>[];
-  final _recognizer = Recognizer();
+  final _recognizer = TfliteRecognizer(ImageProcessing());
   List<Prediction> _prediction;
   bool initialize = false;
 
@@ -92,9 +93,10 @@ class _DrawScreenState extends State<DrawScreen> {
   }
 
   void _recognize() async {
-    List<dynamic> pred = await _recognizer.recognize(_points);
+    List<dynamic> prediction = await _recognizer.recognize(_points);
     setState(() {
-      _prediction = pred.map((json) => Prediction.fromJson(json)).toList();
+      _prediction =
+          prediction.map((json) => Prediction.fromJson(json)).toList();
     });
   }
 }
